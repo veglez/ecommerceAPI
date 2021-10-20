@@ -4,3 +4,4 @@ api
 .husky
 .vscode
 .env
+.eslintcache
