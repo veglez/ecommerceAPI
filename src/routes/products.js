@@ -1,6 +1,7 @@
 import express from 'express';
 import config from '../config/index.js';
 import ProductService from '../services/products.js';
+import handleAuth from '../middlewares/handleAuthorization.js';
 
 const router = express.Router();
 
@@ -26,7 +27,7 @@ router.get('/:id', async (req, res, next) => {
   res.json(item).end();
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', handleAuth(['admin']), async (req, res, next) => {
   try {
     const itemCreated = await ProductService.createOneProduct(req.body);
     res.status(201).json(itemCreated);

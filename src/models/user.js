@@ -11,14 +11,15 @@ const userSchema = new Schema({
     required: true,
     unique: true,
     validate: {
-      validator: uniqueValidator,
-      message: 'Email already taken',
+      validator: (v) => uniqueValidator.bind(this, 'email', v),
+
+      message: 'Email {VALUE} already taken',
     },
   },
   password: { type: String, required: true },
   role: {
     type: String,
-    enum: ['admin', 'god', 'user'],
+    enum: ['admin', 'user', 'god'],
     default: 'user',
     require: true,
   },

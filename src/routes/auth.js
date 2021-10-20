@@ -17,7 +17,9 @@ authRouter.get('/', async (req, res, next) => {
 authRouter.post('/register', async (req, res, next) => {
   try {
     const user = await UserService.createUser(req.body);
-    const { accessToken: token, refreshToken } = jwtHelper.getTokens(user.id);
+    const { accessToken: token, refreshToken } = jwtHelper.getTokens(user.id, {
+      role: user.role,
+    });
     res.cookie('refresh', refreshToken, {
       httpOnly: true,
       sameSite: true,
@@ -33,7 +35,9 @@ authRouter.post('/register', async (req, res, next) => {
 authRouter.post('/login', async (req, res, next) => {
   try {
     const user = await UserService.checkCredentials(req.body);
-    const { accessToken: token, refreshToken } = jwtHelper.getTokens(user.id);
+    const { accessToken: token, refreshToken } = jwtHelper.getTokens(user.id, {
+      role: user.role,
+    });
     res.cookie('refresh', refreshToken, {
       httpOnly: true,
       sameSite: true,
