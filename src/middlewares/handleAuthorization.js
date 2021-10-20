@@ -2,7 +2,6 @@ import jwt from 'jsonwebtoken';
 import config from '../config/index.js';
 
 const handleAuth = (roles = ['god']) => {
-  console.log(typeof roles, roles);
   return (req, res, next) => {
     const auth = req.headers['authorization'].split(' ');
     const authType = auth[0];
