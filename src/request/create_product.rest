@@ -1,0 +1,23 @@
+POST http://localhost:8000/api/v1/products HTTP/1.1
+content-type: application/json
+
+{
+    "thumbnail": { "src": "https://picsum.photos/200", "alt": "firefox jacket" },
+    "name": "Firefox jacket with dark mode",
+    "score": 5,
+    "price": 325,
+    "isFavorite": true
+}
+
+#Bad post lack of required field name
+###
+
+POST http://localhost:8000/api/v1/products HTTP/1.1
+content-type: application/json
+
+{
+    "thumbnail": { "src": "https://picsum.photos/200", "alt": "firefox jacket" },
+    "score": 5,
+    "price": 666.666,
+    "isFavorite": true
+}

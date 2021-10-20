@@ -1,0 +1,41 @@
+{
+  "name": "ecommerce",
+  "version": "1.0.0",
+  "description": "\"An amaizing ecommerce\"",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "DEBUG=app:* nodemon ./src/index",
+    "start": "NODE_ENV=production node index",
+    "prepare": "husky install"
+  },
+  "keywords": [
+    "ecommerce",
+    "express",
+    "react"
+  ],
+  "author": "Valentin Eduardo Gonzalez Morales <valentin.eduardo.g94@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.8"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": ">=6",
+    "lint-staged": ">=10",
+    "nodemon": "^2.0.13",
+    "prettier": "^2.4.1"
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix"
+  }
+}

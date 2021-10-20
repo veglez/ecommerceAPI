@@ -1,0 +1,16 @@
+#Get all products
+GET http://localhost:8000/api/v1/products
+
+###
+#Get ONE product
+GET http://localhost:8000/api/v1/products/6158c7c02044a71d0219dcd1
+
+
+#General request error
+###
+#bad url
+GET http://localhost:8000/api/v1/productsa
+
+###
+#bad ID
+GET http://localhost:8000/api/v1/products/6158c7c02044a71d0219dcd10

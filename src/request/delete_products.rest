@@ -1,0 +1,4 @@
+@id=615902b73b0b65c73037cc11
+#Delete one item
+DELETE  http://localhost:8000/api/v1/products/{{id}}
+
