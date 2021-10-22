@@ -22,12 +22,14 @@ import config from '../config/index.js';
  */
 async function paginate(query = {}) {
   try {
-    const { sortBy, page, limit, selection, filters, ...rest } = query;
+    const { sortBy, page, limit, selection, populate, filters, ...rest } =
+      query;
     const options = {
       sortBy,
       page: parseInt(page, 10),
       limit: parseInt(limit, 10),
       selection,
+      populate,
       filters,
     };
 
@@ -36,9 +38,9 @@ async function paginate(query = {}) {
       page: options.page || 1,
       selection: options.selection || '',
       sortBy: options.sortBy || '',
+      populate: options.populate || '',
       filters: options.filters || '',
     };
-
     const totalDocs = await this.estimatedDocumentCount(rest);
 
     // putting boundaries to page requested by user. Can't exceed minimun and maximun
@@ -56,6 +58,7 @@ async function paginate(query = {}) {
       .limit(defaultOptions.limit)
       .skip((defaultOptions.page - 1) * defaultOptions.limit)
       .sort(defaultOptions.sortBy)
+      .populate(defaultOptions.populate)
       .where(defaultOptions.filters);
     //need to add filters somehow
 

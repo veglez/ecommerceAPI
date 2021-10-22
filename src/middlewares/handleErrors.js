@@ -1,10 +1,12 @@
 export default function (err, req, res, next) {
   const error = err.message || err;
+  if (res.headersSent) {
+    return next(err);
+  }
   res
     .status(403)
     .json({ message: 'hubo un error. debuggear middleware', err: error })
     .end();
-  next();
 }
 
 //posible error.message:

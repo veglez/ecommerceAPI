@@ -3,8 +3,8 @@ import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
 const reviewSchema = new Schema({
-  user: { type: Schema.Types.ObjectId, ref: 'user' },
-  product: { type: Schema.Types.ObjectId, ref: 'product' },
+  user: { type: Schema.Types.ObjectId, ref: 'User' },
+  product: { type: Schema.Types.ObjectId, ref: 'Product' },
   opinion: { type: String, required: true },
   score: { type: Number, required: true },
   published: { type: Schema.Types.Date, default: new Date() },

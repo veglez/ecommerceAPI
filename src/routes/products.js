@@ -2,6 +2,7 @@ import express from 'express';
 import config from '../config/index.js';
 import ProductService from '../services/products.js';
 import handleAuth from '../middlewares/handleAuthorization.js';
+import ReviewsService from '../services/reviews.js';
 
 const router = express.Router();
 
@@ -27,6 +28,18 @@ router.get('/:id', async (req, res, next) => {
   res.json(item).end();
 });
 
+router.get('/:id/reviews', async (req, res, next) => {
+  const { id } = req.params;
+  //its what needs Review schema
+  const obj = { ...req.query, product: id };
+  try {
+    const reviews = await ReviewsService.getAllFromProduct(obj);
+    res.json(reviews);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.post('/', handleAuth(['admin']), async (req, res, next) => {
   try {
     const itemCreated = await ProductService.createOneProduct(req.body);
@@ -36,7 +49,7 @@ router.post('/', handleAuth(['admin']), async (req, res, next) => {
   }
 });
 
-router.patch('/:id', async (req, res, next) => {
+router.patch('/:id', handleAuth(['admin']), async (req, res, next) => {
   try {
     const { id } = req.params;
     const updatedItem = await ProductService.updateOne(id, req.body);
@@ -46,7 +59,7 @@ router.patch('/:id', async (req, res, next) => {
   }
 });
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', handleAuth(['admin']), async (req, res, next) => {
   const { id } = req.params;
   const item = await ProductService.deleteOne(id);
   if (!item) return next('Verificar ID, no existe item');

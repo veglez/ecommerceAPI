@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import paginate from '../plugins/paginator.js';
+import uniqueValidator from '../utils/uniqueValidator.js';
 
 const Image = new mongoose.Schema({
   src: String,
@@ -20,17 +21,7 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
       validate: {
-        validator: async function (name) {
-          try {
-            const item = await this.constructor.findOne({ name });
-            if (item && item.name === name) {
-              return false;
-            }
-            return true;
-          } catch (e) {
-            return false;
-          }
-        },
+        validator: (v) => uniqueValidator.bind(this, 'name', v),
         message: `{VALUE} already exists in database`,
       },
     },
@@ -53,14 +44,14 @@ const productSchema = new mongoose.Schema(
       },
     ],
     description: { type: String, default: '', trim: true },
-    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
+    //reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
   },
   {
     timestamps: true,
   }
 );
 
-productSchema.plugin(paginate);
+mongoose.plugin(paginate);
 
 productSchema.set('toJSON', {
   transform: (document, ret) => {

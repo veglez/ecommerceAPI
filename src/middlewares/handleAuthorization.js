@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import config from '../config/index.js';
 
 const handleAuth = (roles = ['god']) => {
+  roles = [...roles, 'god'];
   return (req, res, next) => {
     const auth = req.headers['authorization'].split(' ');
     const authType = auth[0];
@@ -13,7 +14,6 @@ const handleAuth = (roles = ['god']) => {
     payload = jwt.verify(token, config.jwtAccess);
 
     if (!payload) return next('invalid token');
-
     if (roles.includes(payload.role)) {
       req.user = payload;
       next();
