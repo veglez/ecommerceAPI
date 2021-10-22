@@ -67,4 +67,26 @@ authRouter.get('/bobjwt', (req, res, next) => {
   }
 });
 
+authRouter.post('/recovery', async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    const response = await UserService.sendRecoveryEmail(email);
+    res.json(response);
+  } catch (error) {
+    next(error);
+  }
+});
+
+authRouter.post('/reset-password', async (req, res, next) => {
+  try {
+    const { token, newPassword } = req.body;
+    const updatedUser = await UserService.changePassword(token, newPassword);
+    res.send({
+      message: `User: ${updatedUser.username} change password successfully`,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default authRouter;

@@ -10,6 +10,8 @@ const config = {
   jwtRefresh: process.env.JWT_REFRESH,
   jwtRecovery: process.env.JWT_RECOVERY,
   cookies: process.env.COOKIES_SIGN,
+  smtpUser: process.env.SMTP_USER,
+  smtpPassword: process.env.SMTP_PASSWORD,
 };
 
 config['baseURL'] = `http://localhost:${config.port}/api/v1`;

@@ -14,7 +14,7 @@ class jwtHelper {
       ...extra,
     };
     const options = {
-      expiresIn: '5min',
+      expiresIn: '1d',
     };
     const token = jwt.sign(tokenPayload, config.jwtAccess, options);
     return token;
@@ -38,22 +38,37 @@ class jwtHelper {
       ...extra,
     };
     const options = {
-      expiresIn: '15min',
+      expiresIn: '10min',
     };
     const token = jwt.sign(tokenPayload, config.jwtRecovery, options);
     return token;
   }
-
+  /**
+   * When login or register return the access token and the recovery token
+   * @param {String} id user id
+   * @param {Object} extra additional info for jwt token, default has {sub, iat, exp}
+   * @returns {Object} {accessToken, refreshToken}
+   */
   static getTokens(id, extra = {}) {
     const accessToken = this.createAccessToken(id, extra);
     const refreshToken = this.createRefreshToken(id, extra);
     return { accessToken, refreshToken };
   }
 
+  /**
+   * Verify refresh token to get a new session token, replace old ones
+   * @param {String} refreshToken a JSON Web Token for recovery sessions
+   * @returns {Object} new Object with new access token and recovery token {accessToken, refreshToken}
+   */
   static refreshTokens(refreshToken) {
     const payload = jwt.verify(refreshToken, config.jwtRefresh);
     if (!payload) return null;
     return () => this.getTokens(payload.sub);
+  }
+
+  static verifyRefreshToken(token) {
+    const payload = jwt.verify(token, config.jwtRecovery);
+    return payload;
   }
 }
 

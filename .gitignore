@@ -5,3 +5,4 @@ api
 .vscode
 .env
 .eslintcache
+yarn*
