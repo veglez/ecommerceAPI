@@ -41,12 +41,15 @@ async function paginate(query = {}) {
       populate: options.populate || '',
       filters: options.filters || '',
     };
-    const totalDocs = await this.estimatedDocumentCount(rest);
+    const totalDocs = await this.countDocuments(rest);
 
     // putting boundaries to page requested by user. Can't exceed minimun and maximun
     const maxPage = Math.ceil(totalDocs / defaultOptions.limit);
 
-    if (defaultOptions.page > maxPage || defaultOptions.page < 1) {
+    if (
+      (defaultOptions.page > maxPage || defaultOptions.page < 1) &&
+      totalDocs > 0
+    ) {
       throw new Error('pageOutOfRange', {
         cause: `Exceed page boundaries. page params should be between 1 to ${maxPage}. Got ${defaultOptions.page}`,
       });

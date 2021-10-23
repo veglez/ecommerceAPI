@@ -56,6 +56,9 @@ mongoose.plugin(paginate);
 productSchema.set('toJSON', {
   transform: (document, ret) => {
     ret.id = ret._id;
+    if (ret.percentageOff !== 0) {
+      ret.previousPrice = ret.price / (1 - ret.percentageOff / 100);
+    }
     delete ret._id;
     delete ret.__v;
     return ret;

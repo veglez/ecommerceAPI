@@ -26,6 +26,11 @@ class ReviewsService {
     const removed = await Review.findByIdAndDelete(id);
     return removed;
   }
+
+  static async getAll(params) {
+    const reviews = await Review.paginate(params);
+    return reviews;
+  }
 }
 
 export default ReviewsService;

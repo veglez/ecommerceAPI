@@ -31,7 +31,7 @@ router.get('/:id', async (req, res, next) => {
 router.get('/:id/reviews', async (req, res, next) => {
   const { id } = req.params;
   //its what needs Review schema
-  const obj = { ...req.query, product: id };
+  const obj = { ...req.query, populate: 'user', product: id };
   try {
     const reviews = await ReviewsService.getAllFromProduct(obj);
     res.json(reviews);

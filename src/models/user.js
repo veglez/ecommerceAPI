@@ -23,6 +23,14 @@ const userSchema = new Schema({
     default: 'user',
     require: true,
   },
+  avatar: {
+    src: {
+      type: String,
+      default:
+        'https://res.cloudinary.com/webstatics/image/upload/v1633301657/ecommerce/profile02_wjfggv.png',
+    },
+    alt: { type: String, default: `default avatar` },
+  },
   profile: { type: Schema.Types.ObjectId, ref: 'Profile' },
 });
 

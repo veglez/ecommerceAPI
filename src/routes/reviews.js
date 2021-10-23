@@ -5,6 +5,15 @@ import ReviewsService from '../services/reviews.js';
 
 const reviewsRouter = express.Router();
 
+reviewsRouter.get('/', async (req, res, next) => {
+  try {
+    const reviews = await ReviewsService.getAll(req.query);
+    res.json(reviews).end();
+  } catch (error) {
+    next(error);
+  }
+});
+
 reviewsRouter.post(
   '/:productId',
   handleAuth(['user', 'admin']),

@@ -1,11 +1,11 @@
 export default function (err, req, res, next) {
-  const error = err.message || err;
+  // const error = err.message || err;
   if (res.headersSent) {
     return next(err);
   }
   res
-    .status(403)
-    .json({ message: 'hubo un error. debuggear middleware', err: error })
+    .status(400)
+    // .json({ message: 'hubo un error. debuggear middleware', err: error })
     .end();
 }
 
