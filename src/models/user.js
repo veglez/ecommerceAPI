@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
-import Profile from './profile.js';
+import { Profile } from './index.js';
 import uniqueValidator from '../utils/uniqueValidator.js';
 
-const { Schema, model } = mongoose;
+const { Schema } = mongoose;
 
 const userSchema = new Schema({
   username: { type: String, required: true },
@@ -54,4 +54,4 @@ userSchema.set('toJSON', {
   },
 });
 
-export default model('User', userSchema);
+export default userSchema;

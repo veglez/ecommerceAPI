@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import paginate from '../plugins/paginator.js';
 import uniqueValidator from '../utils/uniqueValidator.js';
+import { Review } from './index.js';
 
 const Image = new mongoose.Schema({
   src: String,
@@ -39,7 +39,7 @@ const productSchema = new mongoose.Schema(
     ],
     options: [
       {
-        header: { type: String, required: true },
+        title: { type: String, required: true },
         values: [{ type: String, required: true }],
       },
     ],
@@ -51,12 +51,11 @@ const productSchema = new mongoose.Schema(
   }
 );
 
-mongoose.plugin(paginate);
-
 productSchema.set('toJSON', {
   transform: (document, ret) => {
     ret.id = ret._id;
-    if (ret.percentageOff !== 0) {
+    //price could be undefined depend of the query to filter
+    if (ret.percentageOff !== 0 && ret.price !== undefined) {
       ret.previousPrice = ret.price / (1 - ret.percentageOff / 100);
     }
     delete ret._id;
@@ -65,6 +64,8 @@ productSchema.set('toJSON', {
   },
 });
 
-const Product = mongoose.model('Product', productSchema);
+productSchema.post('remove', (doc) => {
+  Review.deleteMany({ product: doc.id });
+});
 
-export default Product;
+export default productSchema;

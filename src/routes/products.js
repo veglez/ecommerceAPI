@@ -22,10 +22,13 @@ router.get('/', async (req, res, next) => {
 });
 
 router.get('/:id', async (req, res, next) => {
-  const { id } = req.params;
-  const item = await ProductService.getOne(id);
-  if (!item) return next({ message: 'No existe el item, verificar ID' });
-  res.json(item).end();
+  try {
+    const { id } = req.params;
+    const item = await ProductService.getOne(id);
+    res.json(item).end();
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.get('/:id/reviews', async (req, res, next) => {
@@ -60,10 +63,13 @@ router.patch('/:id', handleAuth(['admin']), async (req, res, next) => {
 });
 
 router.delete('/:id', handleAuth(['admin']), async (req, res, next) => {
-  const { id } = req.params;
-  const item = await ProductService.deleteOne(id);
-  if (!item) return next('Verificar ID, no existe item');
-  res.json({ status: 'ELIMINADO', item });
+  try {
+    const { id } = req.params;
+    const item = await ProductService.deleteOne(id);
+    res.json({ status: 'ELIMINADO', item });
+  } catch (error) {
+    next(error);
+  }
 });
 
 export default router;

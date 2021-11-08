@@ -8,14 +8,21 @@ import config from './config/index.js';
 import DefineRoutes from './routes/index.js';
 import handleErrors from './middlewares/handleErrors.js';
 import handleNotFound from './middlewares/handleNotFound.js';
+//start mockup database
+import init from './utils/createDB_data.js';
+init();
 
 const app = express();
-
 //Setings
 // app.set('views', path.join(__dirname, 'views'));
 
-//Middleware
-app.use(cors());
+//Middlewaredocke
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+  })
+);
 app.use(cookieParser(config.cookies));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -26,5 +33,5 @@ app.use(handleErrors);
 app.use(handleNotFound);
 
 app.listen(config.port, () => {
-  console.log('Escuchando en el puerto: ', config.port);
+  console.log('Escuchando en el puerto: ', config.port); // eslint-disable-line
 });

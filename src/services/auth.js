@@ -1,4 +1,4 @@
-import User from '../models/user.js';
+import { User } from '../models/index.js';
 import bcrypt from 'bcrypt';
 import nodemailer from 'nodemailer';
 import jwtHelper from '../utils/jwtHelper.js';

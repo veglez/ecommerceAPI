@@ -1,4 +1,4 @@
-import Review from '../models/review.js';
+import { Review } from '../models/index.js';
 
 class ReviewsService {
   /**
@@ -28,7 +28,8 @@ class ReviewsService {
   }
 
   static async getAll(params) {
-    const reviews = await Review.paginate(params);
+    const updatedParams = { ...params, populate: 'user' };
+    const reviews = await Review.paginate(updatedParams);
     return reviews;
   }
 }

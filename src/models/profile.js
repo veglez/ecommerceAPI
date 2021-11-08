@@ -1,7 +1,7 @@
 import mg from 'mongoose';
 import uniqueValidator from '../utils/uniqueValidator.js';
 
-const { Schema, model } = mg;
+const { Schema } = mg;
 
 const deliveryAddress = new Schema({
   street_name: {
@@ -60,6 +60,4 @@ const profileSchema = new Schema({
   },
 });
 
-const Profile = model('Profile', profileSchema);
-
-export default Profile;
+export default profileSchema;

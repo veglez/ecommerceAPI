@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const { Schema, model } = mongoose;
+const { Schema } = mongoose;
 
 const reviewSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User' },
@@ -25,4 +25,4 @@ reviewSchema.set('toJSON', {
   },
 });
 
-export default model('Review', reviewSchema);
+export default reviewSchema;
