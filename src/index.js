@@ -23,6 +23,7 @@ app.use(
     credentials: true,
   })
 );
+app.use('/savedImages/', express.static('savedImages/'));
 app.use(cookieParser(config.cookies));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());

@@ -12,6 +12,7 @@ const config = {
   cookies: process.env.COOKIES_SIGN,
   smtpUser: process.env.SMTP_USER,
   smtpPassword: process.env.SMTP_PASSWORD,
+  refreshCookieName: 'TINAT',
 };
 
 config['baseURL'] = `http://localhost:${config.port}/api/v1`;

@@ -6,3 +6,4 @@ api
 .env
 .eslintcache
 yarn*
+savedImages

@@ -26,7 +26,7 @@ class jwtHelper {
       ...extra,
     };
     const options = {
-      expiresIn: '2h',
+      expiresIn: '2d',
     };
     const token = jwt.sign(tokenPayload, config.jwtRefresh, options);
     return token;
@@ -52,7 +52,7 @@ class jwtHelper {
   static getTokens(id, extra = {}) {
     const accessToken = this.createAccessToken(id, extra);
     const refreshToken = this.createRefreshToken(id, extra);
-    return { accessToken, refreshToken };
+    return { accessToken, refreshToken, id };
   }
 
   /**
@@ -62,8 +62,9 @@ class jwtHelper {
    */
   static refreshTokens(refreshToken) {
     const payload = jwt.verify(refreshToken, config.jwtRefresh);
+    const { sub, exp, ...rest } = payload; //eslint-disable-line
     if (!payload) return null;
-    return () => this.getTokens(payload.sub);
+    return () => this.getTokens(sub, rest);
   }
 
   static verifyRefreshToken(token) {

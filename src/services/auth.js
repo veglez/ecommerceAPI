@@ -75,6 +75,10 @@ class UserService {
     const users = await User.find({});
     return users;
   }
+
+  static async getOne(id) {
+    return await User.findById(id);
+  }
 }
 
 export default UserService;

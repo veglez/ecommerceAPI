@@ -20,7 +20,7 @@ authRouter.post('/register', async (req, res, next) => {
     const { accessToken: token, refreshToken } = jwtHelper.getTokens(user.id, {
       role: user.role,
     });
-    res.cookie('refresh', refreshToken, {
+    res.cookie(config.refreshCookieName, refreshToken, {
       httpOnly: true,
       sameSite: true,
       signed: true,
@@ -37,31 +37,35 @@ authRouter.post('/login', async (req, res, next) => {
     const user = await UserService.checkCredentials(req.body);
     const { accessToken: token, refreshToken } = jwtHelper.getTokens(user.id, {
       role: user.role,
+      username: user.username,
     });
-    res.cookie('refresh', refreshToken, {
+    res.cookie(config.refreshCookieName, refreshToken, {
       httpOnly: true,
       sameSite: true,
       signed: true,
       secure: !config.dev,
     });
-    res.json({ token });
+    res.json({ token, user });
   } catch (error) {
     next(error);
   }
 });
 
-authRouter.get('/bobjwt', (req, res, next) => {
+authRouter.get('/bobjwt', async (req, res, next) => {
   try {
-    const requestTokens = jwtHelper.refreshTokens(req.signedCookies['refresh']);
+    const requestTokens = jwtHelper.refreshTokens(
+      req.signedCookies[config.refreshCookieName]
+    );
     if (!requestTokens) return next({ message: 'Token inválido' });
-    const { accessToken: token, refreshToken } = requestTokens();
-    res.cookie('refresh', refreshToken, {
+    const { accessToken: token, refreshToken, id } = requestTokens();
+    res.cookie(config.refreshCookieName, refreshToken, {
       httpOnly: true,
       sameSite: true,
       signed: true,
       secure: !config.dev,
     });
-    res.json({ token });
+    const user = await UserService.getOne(id);
+    res.json({ token, user });
   } catch (error) {
     next(error);
   }
