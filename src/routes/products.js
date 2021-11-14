@@ -25,6 +25,7 @@ router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const item = await ProductService.getOne(id);
+    if (!item) return next('No existe el producto');
     res.json(item).end();
   } catch (error) {
     next(error);
