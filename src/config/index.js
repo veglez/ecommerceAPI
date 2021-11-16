@@ -5,6 +5,7 @@ dotenv.config();
 const config = {
   dev: process.env.NODE_ENV !== 'production',
   port: process.env.PORT || 8000,
+  host: process.env.HOST || 'http://localhost',
   mongoURL: process.env.MONGO_URL || `mongodb://mongo_db:27017/store`,
   jwtAccess: process.env.JWT_ACCESS,
   jwtRefresh: process.env.JWT_REFRESH,
@@ -13,6 +14,7 @@ const config = {
   smtpUser: process.env.SMTP_USER,
   smtpPassword: process.env.SMTP_PASSWORD,
   refreshCookieName: 'TINAT',
+  fileInput: 'USER_PHOTO_REVIEW',
 };
 
 config['baseURL'] = `http://localhost:${config.port}/api/v1`;

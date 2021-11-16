@@ -5,7 +5,7 @@ const handleDestination = (req, file, cb) => {
 };
 
 const handleFilename = (req, file, cb) => {
-  return cb(null, `${new Date().toISOString()}_${file.originalname}`);
+  return cb(null, `${+new Date()}_${file.originalname}`);
 };
 
 const storage = multer.diskStorage({

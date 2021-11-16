@@ -6,7 +6,7 @@ const reviewSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User' },
   product: { type: Schema.Types.ObjectId, ref: 'Product' },
   opinion: { type: String, required: true },
-  score: { type: Number, required: true },
+  score: { type: Number, required: true, min: 0, max: 5 },
   published: { type: Schema.Types.Date, default: new Date() },
   images: [
     {

@@ -34,6 +34,8 @@ router.get('/:id', async (req, res, next) => {
 
 router.get('/:id/reviews', async (req, res, next) => {
   const { id } = req.params;
+  const item = await ProductService.getOne(id);
+  if (!item) return next('No existe el item con id ', id);
   //its what needs Review schema
   const obj = { ...req.query, populate: 'user', product: id };
   try {

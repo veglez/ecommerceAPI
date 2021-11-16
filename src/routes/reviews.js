@@ -1,4 +1,5 @@
 import express from 'express';
+import config from '../config/index.js';
 import handleAuth from '../middlewares/handleAuthorization.js';
 import handleImageUpload from '../middlewares/handleImageUpload.js';
 import ProductService from '../services/products.js';
@@ -18,7 +19,7 @@ reviewsRouter.get('/', async (req, res, next) => {
 reviewsRouter.post(
   '/:productId',
   handleAuth(['user', 'admin']),
-  handleImageUpload.array('inputFile'),
+  handleImageUpload.array(config.fileInput),
   async (req, res, next) => {
     const { productId } = req.params;
     const userId = req.user.sub;
@@ -28,7 +29,7 @@ reviewsRouter.post(
     let images = [];
     //adding the user photos
     req.files.forEach((p) => {
-      const src = `/savedImages/${p.filename}/`;
+      const src = `${config.host}:${config.port}/savedImages/${p.filename}`;
       const alt = `${p.originalname} photo from ${
         req.user.username
       } on ${new Date().toISOString()}`;
