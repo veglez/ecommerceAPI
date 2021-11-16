@@ -62,7 +62,7 @@ class jwtHelper {
    */
   static refreshTokens(refreshToken) {
     const payload = jwt.verify(refreshToken, config.jwtRefresh);
-    const { sub, exp, ...rest } = payload; //eslint-disable-line
+    const { sub, exp, iat, ...rest } = payload; //eslint-disable-line
     if (!payload) return null;
     return () => this.getTokens(sub, rest);
   }
