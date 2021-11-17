@@ -6,8 +6,8 @@ class ReviewsService {
    * @param {Object} param paginate Object
    * @see projectPath ./src/plugins/paginator.js
    */
-  static async getAllFromProduct(param) {
-    const reviews = await Review.paginate(param);
+  static async getAllFromProduct(param, endpoint) {
+    const reviews = await Review.paginate(param, endpoint);
     return reviews;
   }
 

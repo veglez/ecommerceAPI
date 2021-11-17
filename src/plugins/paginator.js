@@ -20,7 +20,7 @@ import config from '../config/index.js';
  * @param {object} options The pagination options: limit, page, selection, sortby
  * @returns {Promise<Paginator>} The paginator object
  */
-async function paginate(query = {}) {
+async function paginate(query = {}, endpoint = null) {
   try {
     const { sortBy, page, limit, selection, populate, filters, ...rest } =
       query;
@@ -67,7 +67,7 @@ async function paginate(query = {}) {
 
     //this with help to next and prev links
     const url = config.baseURL;
-    const endpoint = this.collection.name;
+    const route = endpoint ? endpoint : this.collection.name;
 
     const meta = {
       hasNext:
@@ -99,10 +99,10 @@ async function paginate(query = {}) {
     }
     //creating the links for next and previous page
     meta['next'] = meta.hasNext
-      ? `${url}/${endpoint}?page=${meta.page + 1}${nextQuery}`
+      ? `${url}/${route}?page=${meta.page + 1}${nextQuery}`
       : null;
     meta['prev'] = meta.hasPrev
-      ? `${url}/${endpoint}?page=${meta.page - 1}${nextQuery}`
+      ? `${url}/${route}?page=${meta.page - 1}${nextQuery}`
       : null;
 
     return meta;
