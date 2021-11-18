@@ -19,6 +19,7 @@ class ReviewsService {
   static async createReview(payload) {
     const itemCreated = new Review(payload);
     const savedItem = await itemCreated.save();
+    await savedItem.populate('user');
     return savedItem;
   }
 
